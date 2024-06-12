@@ -71,6 +71,39 @@ void priority(int pid[], int at[], int  bt[], int st[], int ct[], int wt[], int 
 	}
 }
 
+void RR(int pid[], int at[], int bt[], int n, int tq){
+
+    int zCount = n;
+    int i=0;
+
+    do{
+        if (bt[i]==0){
+            --zCount;
+            ++i;
+        }
+
+        else if (bt[i]<=tq){
+            printf("%d\t%d\n", pid[i], bt[i]);
+            bt[i]=0;
+            i++;
+        }
+
+        else{
+            printf("%d\t%d\n", pid[i], bt[i]);
+            bt[i]-=tq;
+            i++;
+        }
+
+        if (i==n){
+            printf("\n");
+            i=0;
+        }
+    } while(zCount!=0);
+
+    for (int i=0; i<n; ++i)
+        printf("%d\t%d\n", pid[i], bt[i]);
+}
+
 int main(){
 	int n;
 	
@@ -86,27 +119,36 @@ int main(){
 		AT[i]=0;
 	}
 	
-	int prior[n];
+	// int prior[n];
 	
-	printf("\nEnter priority respectively(lower the number, higher the priority, all 0's for no priority):\n");
+	// printf("\nEnter priority respectively(lower the number, higher the priority, all 0's for no priority):\n");
 	
-	for(int i=0; i<n; ++i)
-		scanf("%d", &prior[i]);
+	// for(int i=0; i<n; ++i)
+	// 	scanf("%d", &prior[i]);
 	
-	printf("\nEntered data:\n------------------------\nPID\tAT\tBT\tPriority\n");
+	printf("\nEntered data:\n------------------------\nPID\tAT\tBT\n");
 	
 	for(int i=0; i<n; ++i){
-		printf("%d\t%d\t%d\t%d\n", PID[i], AT[i], BT[i], prior[i]);
+		printf("%d\t%d\t%d\n", PID[i], AT[i], BT[i]);
 	}
 	
 	
-	priority(PID, AT, BT, ST, CT, WT, TAT, prior, n);
+	// priority(PID, AT, BT, ST, CT, WT, TAT, prior, n);
+
+    int tq;
+
+    printf("\nEnter time quantum: ");
+    scanf("%d", &tq);
+
+    printf("\nGantt Chart:\n\nPID\tRemaining BT\n");
+
+    RR(PID, AT, BT, n, tq);
 	
-	printf("\nAfter Scheduling:\n------------------------\nPID\tAT\tBT\tPriority\tST\tCT\tWT\tTAT\n");
+	// printf("\nAfter Scheduling:\n------------------------\nPID\tAT\tBT\tPriority\tST\tCT\tWT\tTAT\n");
 	
-	for(int i=0; i<n; ++i){
-		printf("%d\t%d\t%d\t%d\t\t%d\t%d\t%d\t%d\n", PID[i], AT[i], BT[i], prior[i], ST[i], CT[i], WT[i], TAT[i]);
-	}
+	// for(int i=0; i<n; ++i){
+	// 	printf("%d\t%d\t%d\t%d\t\t%d\t%d\t%d\t%d\n", PID[i], AT[i], BT[i], prior[i], ST[i], CT[i], WT[i], TAT[i]);
+	// }
 
     return 0;
 }
